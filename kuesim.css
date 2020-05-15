@@ -1,0 +1,61 @@
+#regs-area {
+  width: 16em;
+}
+
+#regs-area table tr td {
+  padding: 0.4em 0.5em 0.1em 0;
+  width:  8em;
+  height: 1.55em;
+}
+
+#regs-area input {
+  width:  6em;
+  height: 1.55em;
+}
+
+#inst, #mem, #log {
+  margin   : 0.5em 0 0 0;
+  height   : 50em;
+  overflow : auto;
+  /* border   : solid 3px #FFCC99; */
+}
+
+#inst-area, #mem-area, #log-area { height: 60em; }
+#inst, #mem, #log {
+    height: 600px;
+}
+
+#inst-area { width: 27em; }
+#inst      { width: 25em; }
+
+#mem-area { width: 27.5em; }
+#mem {
+    width : 25em;
+    border: solid 1px #aaaaaa;
+}
+
+#log-area { width : 28em; }
+#log      { width : 100%; }
+
+
+.w14p { width : 14%; }
+.w18p { width : 18%; }
+.w20p { width : 20%; }
+.w24p { width : 24%; }
+.w28p { width : 28%; }
+.w38p { width : 38%; }
+.w43p { width : 43%; }
+.w78p { width : 78%; }
+
+.float { float: left; }
+
+.clearfix:after {
+  display:block;
+  clear:both;
+  height:0px;
+  visibility:hidden;
+  content:".";
+}
+
+
+
