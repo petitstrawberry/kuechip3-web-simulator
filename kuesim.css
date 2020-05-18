@@ -17,7 +17,11 @@
     /* ----- 上部エリア ----- */
     --nav-height:             3rem;
     /* --nav-background:         #FDC44F; */
-    --nav-background:         steelblue;
+    --nav-background:         steelblue; /* steelblue = rgb(70,130,190) */
+    /* --nav-background:          rgb(70, 140, 190); */
+    /* --nav-background:          rgb(90,170,220); */
+    /* --nav-background:          rgb(100,180,230); */
+
 
 
     /* ----- 下部エリア ----- */
@@ -79,16 +83,35 @@ button {
     height: 100%;
 
     font-family: var(--ui-fonts);
-    /* border: solid 2px #444; */
-    border: none;
-    background: #666;
+    /* border:      solid 2px #444; */
+    border:      none;
+    background:  #555;
+    /* background: rgb(50,80,140); */
+    /* background: rgb(50,100,170); */
     color: white;
+
+    cursor: pointer;
 }
 
 button:hover {
-    background: orange;
+    /* background: orange; */
+    background: #F09629;
 }
 
+button:disabled {
+    /* background: #aaa; */
+    background: #ccc;
+    color:      #fff;
+}
+
+select,
+select option {
+    cursor:     pointer;
+}
+
+*:disabled {
+    cursor:     default;
+}
 
 
 /* -------------------- 構造に合わせたスタイル -------------------- */
@@ -125,13 +148,13 @@ html {
     background: var(--nav-background);
 }
 
-#interface #buttons input#inst_interval {
+#interface #buttons input#inst-interval {
     height: 100%;
     width:  3rem;
     text-align: center;
 }
 
-#interface #buttons input#inst_accel {
+#interface #buttons input#inst-accel {
     height: 100%;
     width:  3rem;
     text-align: center;
@@ -141,9 +164,10 @@ html {
     margin: 0 0.2rem 0 0.2rem;
 }
 
-#interface #buttons select#program_id {
-    height: 100%;
-    width:  18rem;
+#interface #buttons #select-program-id {
+    height:  100%;
+    width:   19rem;
+    padding-left: 0.5rem;
 
     background: var(--input-background);
     color:      var(--input-foreground);

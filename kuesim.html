@@ -12,18 +12,21 @@
   <!-- interface -->
   <div id="interface">
     <div id="buttons">
-      <button id="btn_exec_phase">1 phase</button>
-      <button id="btn_exec_inst">1 inst</button>
+      <button id="btn-exec-phase" disabled>1 Phase</button>
+      <button id="btn-exec-inst" disabled>1 Inst</button>
       <!-- <button onclick="execAll();">all</button> -->
-      <button id="btn_start_execution">start</button>
-      <button id="btn_stop_execution">stop</button>
+      <button id="btn-start-execution" disabled>Start</button>
+      <button id="btn-stop-execution" disabled>Stop</button>
       <!-- <button onclick="setMem();">set memory</button> -->
-      <input id="inst_interval" value="1"><span class="unit">msec</span>
-      <input id="inst_accel" value="100"><span class="unit">inst</span>
+      <input id="inst-interval" value="1"><span class="unit">msec</span>
+      <input id="inst-accel" value="100"><span class="unit">inst</span>
+      <span style="margin-right: 1em"></span>
+      <button id="btn-simulator-reset">Reset</button>
 
       <!-- BEGIN for debug -->
       <span style="margin-right: 4em"></span>
-      <select onkeypress="UpdateSampleId(event.keyCode);" id="program_id" value="4.1">
+      <select id="select-program-id">
+        <option hidden>- select sample program -</option>
         <option value="4.1">[1] 1 から N までの和</option>
         <option value="4.2">[2] 3.2 多倍長の加算</option>
         <option value="4.3">[3] ユークリッドの互除法による最大公約数</option>
@@ -35,40 +38,38 @@
         <option value="4.9">[9] マーチングによるメモリテスト</option>
         <option value="4.10">[10] サブルーチンコールを用いた階乗計算</option>
       </select>
-      <button onclick="SetSampleProgram();">set sample</button>
+      <!-- <button onclick="SetSampleProgram();">set sample</button> -->
       <!-- END for debug -->
-
-      <button id="btn_simulator_reset">reset</button>
     </div>
 
     <div id="state-disp">
       <div id="regs-area" class="panel">
         <div class="panel-header">Phase</div>
-        <div> <label><p>phase       </p><input id="Phase"        class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>phase       </p><input id="phase"        class="reg" placeholder="0"      value="0">      </label> </div>
         <div class="panel-header">Registers</div>
-        <div> <label><p>PC          </p><input id="PC"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
-        <div> <label><p>IR          </p><input id="IR"           class="reg" placeholder="0x00"   value="0x00">   </label> </div>
-        <div> <label><p>SP          </p><input id="SP"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
-        <div> <label><p>ACC         </p><input id="ACC"          class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
-        <div> <label><p>IX          </p><input id="IX"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
-        <div> <label><p>MAR         </p><input id="MAR"          class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
-        <div> <label><p>CF          </p><input id="CF"           class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>VF          </p><input id="VF"           class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>NF          </p><input id="NF"           class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>ZF          </p><input id="ZF"           class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>IBUF        </p><input id="IBUF"         class="reg" placeholder="0x00"   value="0x00">   </label> </div>
-        <div> <label><p>OBUF        </p><input id="OBUF"         class="reg" placeholder="0x00"   value="0x00">   </label> </div>
-        <div> <label><p>IBUF_RE     </p><input id="IBUF_RE"      class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>OBUF_WE     </p><input id="OBUF_WE"      class="reg" placeholder="0"      value="0">      </label> </div>
-        <div> <label><p>IBUF_FLG_CLR</p><input id="IBUF_FLG_CLR" class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>PC          </p><input id="pc"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
+        <div> <label><p>IR          </p><input id="ir"           class="reg" placeholder="0x00"   value="0x00">   </label> </div>
+        <div> <label><p>SP          </p><input id="sp"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
+        <div> <label><p>ACC         </p><input id="acc"          class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
+        <div> <label><p>IX          </p><input id="ix"           class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
+        <div> <label><p>MAR         </p><input id="mar"          class="reg" placeholder="0x0000" value="0x0000"> </label> </div>
+        <div> <label><p>CF          </p><input id="cf"           class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>VF          </p><input id="vf"           class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>NF          </p><input id="nf"           class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>ZF          </p><input id="zf"           class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>IBUF        </p><input id="ibuf"         class="reg" placeholder="0x00"   value="0x00">   </label> </div>
+        <div> <label><p>OBUF        </p><input id="obuf"         class="reg" placeholder="0x00"   value="0x00">   </label> </div>
+        <div> <label><p>IBUF_RE     </p><input id="ibuf-re"      class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>OBUF_WE     </p><input id="obuf-we"      class="reg" placeholder="0"      value="0">      </label> </div>
+        <div> <label><p>IBUF_FLG_CLR</p><input id="ibuf-flg-clr" class="reg" placeholder="0"      value="0">      </label> </div>
       </div>
 
       <div id="inst-area" class="panel">
         <div class="panel-header" style="display: flex; justify-content: space-between;">
           <p style="margin: 0">Instructions</p>
           <div style="height: 100%">
-            <button id="btn_assemble">assemble</button>
-            <button id="btn_set_memory">set memory</button>
+            <button id="btn-open-assembler">assembler</button>
+            <button id="btn-set-memory">set memory</button>
           </div>
         </div>
         <textarea id="inst" placeholder="初期メモリデータを入力">
@@ -121,24 +122,29 @@
         <div id="area-input-assembly">
           <textarea id="input-assembly" placeholder="input assembly here"></textarea>
         </div>
+        <div id="area-assemble-button">
+          <div id="btn-assemble-wrapper">
+            <div id="btn-assemble" class="arrow"></div>
+          </div>
+        </div>
         <div id="area-output-binary">
           <textarea id="output-binary" placeholder="output binary will be generated here"></textarea>
         </div>
       </div>
       <div id="area-assembler-buttons">
         <div class="buttons">
-          <button id="btn_copy_to_clipboard">copy to clipboard</button>
-          <button id="btn_copy_to_simulator">copy to simulator</button>
+          <button id="btn-copy-to-clipboard">copy to clipboard</button>
+          <button id="btn-copy-to-simulator">copy to simulator</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- <canvas id="kuesim" data-processing-sources="test.pde"></canvas> -->
   <canvas id="kuesim" style="display: none;" data-processing-sources="ALU.pde input.pde InstBase.pde InstFactory.pde InstIn.pde InstNop.pde InstRcf.pde InstShift.pde InstSt.pde KueState.pde RtCode.pde textarea.pde Hex.pde InstAlu.pde InstBcc.pde InstHlt.pde InstLd.pde InstOut.pde InstScf.pde InstSp.pde KueSim.pde pos.pde simulator.pde KueIo.pde"></canvas>
 
   <script src="kuesim.js"></script>
   <script src="sample-prog.js"></script> <!-- for development -->
   <script src="kueasm-ui.js"></script>
+  <script src="kueasm/dist/web.js"></script>
 </body>
 </html>

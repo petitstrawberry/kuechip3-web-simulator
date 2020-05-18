@@ -415,16 +415,15 @@ samplePrograms['4.10'] = `
 0078: 1021      # POLY: PROG 1021H
 `
 
-function SetSampleProgram() {
-    var programId = document.getElementById("program_id").value
+$('#select-program-id').on('change', () => {
+    var programId = $('#select-program-id').val()
 
-    if ( programId in samplePrograms ) {
+    if ( samplePrograms[programId] ) {
         logger.info(`Set sample program '${programId}'`)
     }
     else {
         logger.error(`Sample program '${programId}' is not found.`)
     }
 
-    document.getElementById("inst").value = samplePrograms[programId].trim()
-}
-
+    $('#inst').val( samplePrograms[programId].replace(/^\n+/, '') )
+})

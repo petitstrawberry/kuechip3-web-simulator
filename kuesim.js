@@ -83,10 +83,10 @@ const logger = {
 
 
 // ===== event handler =====
-$('#btn_set_memory').on('click', () => {
+$('#btn-set-memory').on('click', () => {
     logger.info('Set memory data.')
 
-    const insts = document.getElementById('inst').value
+    const insts = $('#inst').val()
     const instList = insts.replace(/^\n/gm, '').split('\n')
 
     const psg = getProcessingInstance()
@@ -94,10 +94,17 @@ $('#btn_set_memory').on('click', () => {
 
     fHasSetMemory = true
 
+    // 実行ボタンを無効状態を解除
+    $('#btn-start-execution').prop('disabled', false)
+    $('#btn-stop-execution' ).prop('disabled', false)
+    $('#btn-exec-phase'     ).prop('disabled', false)
+    $('#btn-exec-inst'      ).prop('disabled', false)
+
+
     dumpMem()
 })
 
-$('#btn_exec_phase').on('click', () => {
+$('#btn-exec-phase').on('click', () => {
     getStateFromForm()
     const rtCode = update("phase")
     dump()
@@ -111,7 +118,7 @@ $('#btn_exec_phase').on('click', () => {
     }
 })
 
-$('#btn_exec_inst').on('click', () => {
+$('#btn-exec-inst').on('click', () => {
     getStateFromForm()
     const rtCode = update("inst")
     dump()
@@ -126,7 +133,7 @@ $('#btn_exec_inst').on('click', () => {
     }
 })
 
-$('#btn_start_execution').on('click', async () => {
+$('#btn-start-execution').on('click', async () => {
     getStateFromForm()
 
     const psg = getProcessingInstance()
@@ -138,8 +145,8 @@ $('#btn_start_execution').on('click', async () => {
 
     fExecInsts = true
 
-    const interval = $('#inst_interval').val()        // 命令実行間隔
-    const accel    = $('#inst_accel').val()           // まとめて実行する命令数
+    const interval = $('#inst-interval').val()        // 命令実行間隔
+    const accel    = $('#inst-accel').val()           // まとめて実行する命令数
                                                       // (マーチングとかを早くやる用)
 
     logger.info('Start execution.')
@@ -164,37 +171,44 @@ $('#btn_start_execution').on('click', async () => {
     }
 })
 
-$('#btn_stop_execution').on('click', () => {
+$('#btn-stop-execution').on('click', () => {
     logger.info('Stop execution')
     fExecInsts = false
 })
 
 
-$('#btn_simulator_reset').on('click', () => {
+$('#btn-simulator-reset').on('click', () => {
     logger.info('Registers and memory data on kuechip simulator is reset.')
+    fExecInsts = false
+
     // シミュレータリセット
     const psg = getProcessingInstance()
     psg.ResetKueSim()
 
     // UI 上のレジスタ/メモリをリセット
-    $('#Phase').val("0")
-    $('#PC').val("0x0000")
-    $('#IR').val("0x00")
-    $('#SP').val("0x0000")
-    $('#ACC').val("0x0000")
-    $('#IX').val("0x0000")
-    $('#MAR').val("0x0000")
-    $('#CF').val("0")
-    $('#VF').val("0")
-    $('#NF').val("0")
-    $('#ZF').val("0")
-    $('#IBUF').val("0x00")
-    $('#OBUF').val("0x00")
-    $('#IBUF_RE').val("0")
-    $('#OBUF_WE').val("0")
-    $('#IBUF_FLG_CLR').val("0")
+    $('#phase'        ).val("0")
+    $('#pc'           ).val("0x0000")
+    $('#ir'           ).val("0x00")
+    $('#sp'           ).val("0x0000")
+    $('#acc'          ).val("0x0000")
+    $('#ix'           ).val("0x0000")
+    $('#mar'          ).val("0x0000")
+    $('#cf'           ).val("0")
+    $('#vf'           ).val("0")
+    $('#nf'           ).val("0")
+    $('#zf'           ).val("0")
+    $('#ibuf'         ).val("0x00")
+    $('#obuf'         ).val("0x00")
+    $('#ibuf-re'      ).val("0")
+    $('#obuf-we'      ).val("0")
+    $('#ibuf-flg-clr' ).val("0")
+    $('#mem').html('no memory data')
 
-    $('#mem').val('no memory data')
+    // 実行ボタンを無効状態に戻す
+    $('#btn-start-execution').prop('disabled', true)
+    $('#btn-stop-execution' ).prop('disabled', true)
+    $('#btn-exec-phase'     ).prop('disabled', true)
+    $('#btn-exec-inst'      ).prop('disabled', true)
 })
 
 // ===== funtions =====
@@ -237,23 +251,23 @@ function update( mode ) {
 
 function getStateFromForm() {
     // make associative array of KueState
-    state.pc  = parseInt(document.getElementById("PC"  ).value, 16)
-    state.ir  = parseInt(document.getElementById("IR"  ).value, 16)
-    state.sp  = parseInt(document.getElementById("SP"  ).value, 16)
-    state.acc = parseInt(document.getElementById("ACC" ).value, 16)
-    state.ix  = parseInt(document.getElementById("IX"  ).value, 16)
-    state.mar = parseInt(document.getElementById("MAR" ).value, 16)
+    state.pc  = parseInt($('#pc' ).val(), 16)
+    state.ir  = parseInt($('#ir' ).val(), 16)
+    state.sp  = parseInt($('#sp' ).val(), 16)
+    state.acc = parseInt($('#acc').val(), 16)
+    state.ix  = parseInt($('#ix' ).val(), 16)
+    state.mar = parseInt($('#mar').val(), 16)
 
-    state.flagCf = ( document.getElementById("CF").value === '1' )
-    state.flagVf = ( document.getElementById("VF").value === '1' )
-    state.flagNf = ( document.getElementById("NF").value === '1' )
-    state.flagZf = ( document.getElementById("ZF").value === '1' )
+    state.flagCf = ( $('#cf').val() === '1' )
+    state.flagVf = ( $('#vf').val() === '1' )
+    state.flagNf = ( $('#nf').val() === '1' )
+    state.flagZf = ( $('#zf').val() === '1' )
 
-    state.ibuf         = parseInt(document.getElementById("IBUF").value, 16)
-    state.obuf         = parseInt(document.getElementById("OBUF").value, 16)
-    state.ibuf_re      = ( document.getElementById("IBUF_RE"     ).value === '1' )
-    state.obuf_we      = ( document.getElementById("OBUF_WE"     ).value === '1' )
-    state.ibuf_flg_clr = ( document.getElementById("IBUF_FLG_CLR").value === '1' )
+    state.ibuf         = parseInt($('#ibuf').val(), 16)
+    state.obuf         = parseInt($('#obuf').val(), 16)
+    state.ibuf_re      = ( $('#ibuf-re'     ).val() === '1' )
+    state.obuf_we      = ( $('#obuf-we'     ).val() === '1' )
+    state.ibuf_flg_clr = ( $('#ibuf-flg-clr').val() === '1' )
 }
 
 
@@ -268,23 +282,23 @@ function dump() {
 function dumpReg() {
     const psg = getProcessingInstance()
     const state = psg.State()
-    document.getElementById("PC").value  = toHex(state.pc , 4)
-    document.getElementById("IR").value  = toHex(state.ir , 2)
-    document.getElementById("SP").value  = toHex(state.sp , 4)
-    document.getElementById("ACC").value = toHex(state.acc, 4)
-    document.getElementById("IX").value  = toHex(state.ix , 4)
-    document.getElementById("MAR").value = toHex(state.mar, 4)
+    $('#pc' ).val(toHex(state.pc , 4))
+    $('#ir' ).val(toHex(state.ir , 2))
+    $('#sp' ).val(toHex(state.sp , 4))
+    $('#acc').val(toHex(state.acc, 4))
+    $('#ix' ).val(toHex(state.ix , 4))
+    $('#mar').val(toHex(state.mar, 4))
 
-    document.getElementById("CF").value  = state.flagCf ? 1 : 0
-    document.getElementById("VF").value  = state.flagVf ? 1 : 0
-    document.getElementById("NF").value  = state.flagNf ? 1 : 0
-    document.getElementById("ZF").value  = state.flagZf ? 1 : 0
+    $('#cf').val( state.flagCf ? 1 : 0 )
+    $('#vf').val( state.flagVf ? 1 : 0 )
+    $('#nf').val( state.flagNf ? 1 : 0 )
+    $('#zf').val( state.flagZf ? 1 : 0 )
 
-    document.getElementById("IBUF").value         = toHex(state.ibuf, 2)
-    document.getElementById("OBUF").value         = toHex(state.obuf, 2)
-    document.getElementById("IBUF_RE").value      = state.ibuf_re      ? 1 : 0
-    document.getElementById("OBUF_WE").value      = state.obuf_we      ? 1 : 0
-    document.getElementById("IBUF_FLG_CLR").value = state.ibuf_flg_clr ? 1 : 0
+    $('#ibuf'        ).val( toHex(state.ibuf, 2)       )
+    $('#obuf'        ).val( toHex(state.obuf, 2)       )
+    $('#ibuf-re'     ).val( state.ibuf_re      ? 1 : 0 )
+    $('#obuf-we'     ).val( state.obuf_we      ? 1 : 0 )
+    $('#ibuf-flg-clr').val( state.ibuf_flg_clr ? 1 : 0 )
 }
 
 function dumpMem() {
@@ -312,13 +326,13 @@ function dumpMem() {
     }
 
     // 結合して表示
-    document.getElementById("mem").innerHTML = memStr.join('')
+    $('#mem').html( memStr.join('') )
 }
 
 function dumpPhase() {
     const psg = getProcessingInstance()
     const state = psg.State()
-    document.getElementById("Phase").value = state.phase
+    $('#Phase').val( state.phase )
 }
 
 
@@ -348,10 +362,9 @@ function _log(str) {
     const minute = now.getMinutes().toString().padStart(2, '0')
 
     // ログエリアへの出力
-    document.getElementById("log").innerHTML += `[${hour}:${minute}] ${str}<br>`
+    $('#log').html( $('#log').html() + `[${hour}:${minute}] ${str}<br>` )
 
     // 自動スクロール
-    const logArea = document.getElementById("log")
+    const logArea = $('#log')
     logArea.scrollTop = logArea.scrollHeight  // scroll to the bottom
 }
-

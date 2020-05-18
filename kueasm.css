@@ -35,6 +35,28 @@
 	transform: rotate(225deg);
 }
 
+
+/* 矢印 */
+.arrow {
+  display:inline-block;
+  height:1rem;
+  width:2rem;
+  background-color:#5bc0de;
+  position:relative;
+  top:1rem;
+}
+
+.arrow:before {
+  position:absolute;
+  content:"";
+  width:0;
+  height:0;
+  border:1.5rem solid transparent;
+  border-left:1.5rem solid #5bc0de;
+  left:1.8rem;
+  top:-1rem;
+}
+
 /* -------------------- styles -------------------- */
 /* オーバーレイ 汎用 */
 .fullscreen-overlay {
@@ -93,6 +115,7 @@
 
     display:         flex;
     justify-content: space-around;
+    align-items:     center;
 }
 
 #overlay-assembler > #area-assembler-inout > #area-input-assembly,
@@ -111,6 +134,33 @@
 
     resize: none;
 }
+
+#overlay-assembler > #area-assembler-inout > #area-assemble-button {
+    height: 100%;
+    width:  5rem;
+    display: flex;
+    justify-content: center;
+    align-items:     center;
+}
+
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper {
+    width:  3.2rem;
+}
+
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper div {
+    background:   gray;
+}
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper div:before {
+    border-left:1.5rem solid gray;
+}
+
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div {
+    background:   var(--close-button-color-hover);
+}
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div:before {
+    border-left:1.5rem solid var(--close-button-color-hover);
+}
+
 
 #overlay-assembler > #area-assembler-buttons {
     margin:          0 1rem;

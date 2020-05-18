@@ -22,7 +22,7 @@ function closeOverlay() {
 
 /* ---------- 各種リスナ ---------- */
 // アセンブラをオーバーレイ表示
-$('#btn_assemble').on('click', () => {
+$('#btn-open-assembler').on('click', () => {
   $('#overlay-assembler').show()
 })
 
@@ -40,13 +40,13 @@ $(window).on('keyup', e => {
 })
 
 // クリップボードにコピー
-$('#btn_copy_to_clipboard').on('click', () => {
+$('#btn-copy-to-clipboard').on('click', () => {
   logger.info('Copy binary to clipboard')
   copy( $('#output-binary').val() )
 })
 
 // シミュレータにコピー
-$('#btn_copy_to_simulator').on('click', () => {
+$('#btn-copy-to-simulator').on('click', () => {
   logger.info('Copy binary to simulator input')
   const binary = $('#output-binary').val()
   $('#inst').val(binary)
