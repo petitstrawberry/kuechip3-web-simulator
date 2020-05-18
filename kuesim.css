@@ -1,61 +1,239 @@
-#regs-area {
-  width: 16em;
-}
+/* -------------------- パラメータ設定 --------------------*/
+:root {
+    /* ----- 汎用 ----- */
+    /* 文字関連 */
+    --monospace-fonts:        Consolas, 'Courier New', Courier, Monaco, monospace;
+    --ui-fonts:               游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+    /* --log-font-size:          14px; */
+    /* --log-line-height:        1.4; */
 
-#regs-area table tr td {
-  padding: 0.4em 0.5em 0.1em 0;
-  width:  8em;
-  height: 1.55em;
-}
-
-#regs-area input {
-  width:  6em;
-  height: 1.55em;
-}
-
-#inst, #mem, #log {
-  margin   : 0.5em 0 0 0;
-  height   : 50em;
-  overflow : auto;
-  /* border   : solid 3px #FFCC99; */
-}
-
-#inst-area, #mem-area, #log-area { height: 60em; }
-#inst, #mem, #log {
-    height: 600px;
-}
-
-#inst-area { width: 27em; }
-#inst      { width: 25em; }
-
-#mem-area { width: 27.5em; }
-#mem {
-    width : 25em;
-    border: solid 1px #aaaaaa;
-}
-
-#log-area { width : 28em; }
-#log      { width : 100%; }
+    /* 色関連 */
+    --monokai-background:     #272822;
+    /* --input-background:       #333; */
+    --input-background:       #303336;
+    --input-foreground:       white;
 
 
-.w14p { width : 14%; }
-.w18p { width : 18%; }
-.w20p { width : 20%; }
-.w24p { width : 24%; }
-.w28p { width : 28%; }
-.w38p { width : 38%; }
-.w43p { width : 43%; }
-.w78p { width : 78%; }
+    /* ----- 上部エリア ----- */
+    --nav-height:             3rem;
+    /* --nav-background:         #FDC44F; */
+    --nav-background:         steelblue;
 
-.float { float: left; }
 
-.clearfix:after {
-  display:block;
-  clear:both;
-  height:0px;
-  visibility:hidden;
-  content:".";
+    /* ----- 下部エリア ----- */
+    /* panel 共有 */
+    --panel-horizontal-margin: 1rem;
+    --panel-min-width:         16rem; /* regs 以外の penel は flex-grow で広がる */
+
+    /* panel の区切り線 */
+    --border:                 solid 1px #666666;
 }
 
 
+
+/* -------------------- タグ毎のデフォルト -------------------- */
+* {
+    box-sizing: border-box;
+}
+
+/* スクロールバー */
+*::-webkit-scrollbar {
+  width:  10px;
+  height: 10px;
+}
+
+/* スクロールバーの背景 */
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  box-shadow:    0 0 4px #aaa inset;
+}
+
+/* スクロールバーのつまみ部分 */
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  /* background: #1959A8; */
+  background: #555;
+}
+
+textarea {
+    margin:     0;
+    padding:    0.8rem;
+    border:     none;
+    background: var(--input-background);
+    color:      var(--input-foreground);
+
+    font-family: var(--monospace-fonts);
+    font-size:   1rem;
+}
+
+input {
+    margin:     0;
+    padding:    0.2rem;
+    border:     none;
+    background: var(--input-background);
+    color:      var(--input-foreground);
+}
+
+button {
+    width:  6rem;
+    height: 100%;
+
+    font-family: var(--ui-fonts);
+    /* border: solid 2px #444; */
+    border: none;
+    background: #666;
+    color: white;
+}
+
+button:hover {
+    background: orange;
+}
+
+
+
+/* -------------------- 構造に合わせたスタイル -------------------- */
+html, body {
+    margin:      0;
+    width:       100%;
+    height:      100%;
+    overflow-x:  hidden;
+    /* overflow-y:  auto;  /\* ブラウザの幅が狭い時にスクロールできるようにするならこっち *\/ */
+    overflow-y:  hidden;
+
+    background:  var(--monokai-background);
+    color:       white;
+    font-family: var(--ui-fonts)
+}
+
+html {
+    min-width:   1580px;
+    min-height:  780px;
+    overflow:  auto;
+}
+
+
+
+#interface {
+    margin: 0;
+    height: 100%;
+}
+
+#interface #buttons {
+    margin:     0;
+    padding:    0.5rem;
+    height:     var(--nav-height);
+    background: var(--nav-background);
+}
+
+#interface #buttons input#inst_interval {
+    height: 100%;
+    width:  3rem;
+    text-align: center;
+}
+
+#interface #buttons input#inst_accel {
+    height: 100%;
+    width:  3rem;
+    text-align: center;
+}
+
+#interface #buttons span.unit {
+    margin: 0 0.2rem 0 0.2rem;
+}
+
+#interface #buttons select#program_id {
+    height: 100%;
+    width:  18rem;
+
+    background: var(--input-background);
+    color:      var(--input-foreground);
+    border:     none;
+}
+
+#interface #state-disp {
+    height:  calc(100% - var(--nav-height));
+    margin:  0;
+    padding: 0;
+
+    /* c.f. https://www.webcreatorbox.com/tech/css-flexbox-cheat-sheet */
+    display:         flex;
+    align-items:     flex-start;
+    flex-wrap:       wrap;
+    justify-content: space-between;
+}
+
+#interface #state-disp .panel {
+    /* padding: 1rem; */
+    height: calc(100% - 2 * 1rem);
+    width: var(--panel-min-width);
+
+    border-right: var(--border);
+}
+
+#interface #state-disp .panel#inst-area {
+    width: 30rem;
+}
+
+#interface #state-disp .panel#mem-area {
+    width: 20rem;
+}
+
+#interface #state-disp .panel#log-area {
+    flex-grow: 1;
+}
+
+#interface #state-disp .panel:last-child {
+    border: none;
+}
+
+#interface #state-disp .panel .panel-header {
+    /* margin:    0 0 0.5rem 0; */
+    margin: 1rem;
+    font-size:     1.2rem;
+    font-weight:   bold;
+    color:         #888;
+
+    border-bottom: solid 1px #383838;
+}
+
+#interface #state-disp .panel .panel-header:nth-child(n+2) {
+    margin-top:    1.5rem;
+}
+
+#interface #state-disp .panel#regs-area label {
+    margin: 0.4rem 1rem;
+    display: block;
+}
+
+#interface #state-disp .panel#regs-area label > p {
+    padding: 0;
+    margin:  0;
+    width:   8rem;
+    display: inline-block;
+}
+
+#interface #state-disp .panel#regs-area label input {
+    width:   6em;
+    padding: 0.5rem;
+}
+
+#interface #state-disp .panel#inst-area #inst {
+    margin:   0 1rem;
+    width:    calc(100% - 2 * 1rem);
+    height:   calc(100% - 4rem);
+    overflow: auto;
+}
+
+#interface #state-disp .panel#mem-area  #mem,
+#interface #state-disp .panel#log-area  #log {
+    margin:   0;
+    padding:  0 1rem;
+    width:    100%;
+    height:   calc(100% - 4rem);
+    overflow: auto;
+}
+
+
+/* --------------- 汎用属性 --------------- */
+.monospace { font-family: var(--monospace-fonts); }
 

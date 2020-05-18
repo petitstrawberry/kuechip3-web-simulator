@@ -5,7 +5,7 @@ class KueSim {
     state = new KueState();
   }
 
-  Boolean Update() {
+  int Update() {
     if( fInstDone ) {
       fInstDone = false;
       inst = instFactory.CreateInstFromBin( state );
@@ -13,20 +13,22 @@ class KueSim {
 
     switch( inst.Exec( state ) ) {
 	    case RT_HLT:
-          return false;
+          // return false;
+          fInstDone = true;
+          break;
     	case RT_DONE:
           fInstDone = true;
           break;
 	    case RT_CONTINUE:
-          break;                    
+          break;
 	    case RT_ERROR:
           Error("ERROR is returned by current instruction");
-          return false;
+          break;
 	    default:
           Error("Invalid return message is found.");
-          return false;
+          return RT_ERROR;
     }
-    return true;
+    return state;
   }
 
   void Dump() {
@@ -60,7 +62,7 @@ class KueSim {
     regArea.Append( "  " + ((inst != null) ? ((inst.NextPhase() + 4) % 5) : "no instruction"));
 
     regArea.Print();
-    
+
 
     // memory
     TextArea memArea = new TextArea(LEFT_OFFSET + BASE_COLUMN_WIDTH, TOP_OFFSET);

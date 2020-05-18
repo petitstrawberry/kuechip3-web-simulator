@@ -416,19 +416,15 @@ samplePrograms['4.10'] = `
 `
 
 function SetSampleProgram() {
-    var pg = document.getElementById("program_id").value
+    var programId = document.getElementById("program_id").value
 
-    if ( pg in samplePrograms ) {
-        log("set sample program '" + pg + "'")
+    if ( programId in samplePrograms ) {
+        logger.info(`Set sample program '${programId}'`)
     }
     else {
-        log("not found sample program '" + pg + "'")
+        logger.error(`Sample program '${programId}' is not found.`)
     }
 
-    document.getElementById("inst").value = samplePrograms[pg]
-}
-
-function UpdateSampleId(code) {
-    if(13 === code) { SetSampleProgram() }
+    document.getElementById("inst").value = samplePrograms[programId].trim()
 }
 

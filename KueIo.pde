@@ -42,10 +42,10 @@ void SetBinary(String bin []) {
 
 // @input : registers data, mode specification
 // @brief : an interface of updating
-Boolean Update(KueState regsAndFlags, String mode) {
+int Update(KueState regsAndFlags, String mode) {
   // mode is "phase", "inst" or "all"
 
-  if( fFinished ) { return true; }
+  if( fFinished ) { return RT_HLT; }
 
   UpdateRegsAndFlags(regsAndFlags); // set regs and flags
   state = kuesim.state;             // just an alias
@@ -63,7 +63,7 @@ Boolean Update(KueState regsAndFlags, String mode) {
     // error check
     if ( rtCode == RT_ERROR ) {
       Error("ERROR is returned by current instruction");
-      return false;
+      return RT_ERROR;
     }
     else if ( rtCode == RT_DONE ) { state.inst = null; }
     else if ( rtCode == RT_HLT  ) { fFinished  = true; }
@@ -71,9 +71,9 @@ Boolean Update(KueState regsAndFlags, String mode) {
     // continuation check
     switch( mode ) {
       case "phase":             // finish always
-        return true;
+        return rtCode;
       case "inst":              // finish if returned DONE or HLT
-        if (rtCode == RT_DONE || rtCode == RT_HLT) { return true; }
+        if (rtCode == RT_DONE || rtCode == RT_HLT) { return rtCode; }
         break;
       case "all":               // finish only if returned HLT
         println(state.GetPc());
@@ -81,11 +81,15 @@ Boolean Update(KueState regsAndFlags, String mode) {
         break;
       default:                  // error : invalid mode
         Error("Invalid mode");
-        return false;
+        return rtCode;
     }
   } while (true);
+}
 
-  // return false;
+
+void ResetKueSim() {
+  fFinished = false;
+  kuesim = new KueSim();
 }
 
 

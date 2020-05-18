@@ -1,0 +1,129 @@
+:root {
+    --close-button-color-normal: #aaa;
+    --close-button-color-hover:  #39a9d6;
+}
+
+/* -------------------- icons -------------------- */
+.close {
+	font-size: 25px;
+	position: relative;
+	width: 1.4em;
+	height: 1.4em;
+	border: 0.11em solid var(--close-button-color-normal);
+	border-radius: 100%;
+}
+/* 左 */
+.close::before {
+	position: absolute;
+	top: 0.1em;
+	left: 0.5em;
+	width: 0.2em;
+	height: 1em;
+	content: "";
+	background-color: var(--close-button-color-normal);
+	transform: rotate(45deg);
+}
+/* 右 */
+.close::after {
+	position: absolute;
+	top: 0.5em;
+	left: 0.1em;
+	width: 1em;
+	height: 0.2em;
+	content: "";
+	background-color: var(--close-button-color-normal);
+	transform: rotate(225deg);
+}
+
+/* -------------------- styles -------------------- */
+/* オーバーレイ 汎用 */
+.fullscreen-overlay {
+    position:   fixed;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    box-sizing: border-box;
+
+    background: rgba(63, 63, 63, 0.95);
+    z-index:    10;
+
+    padding:    2%;
+
+    display:    none;
+}
+
+/* オーバーレイを閉じるボタン */
+.fullscreen-overlay .btn-close-overlay-wrapper {
+    position: fixed;
+    top:      0.6rem;
+    right:    -0.1rem;
+    width:    3rem;
+    height:   3rem;
+}
+
+.fullscreen-overlay .btn-close-overlay-wrapper:after {
+    position:    absolute;
+    bottom:      -0.25rem;
+    right:       1.15rem;
+    content:     "ESC";
+    font-size:   0.7rem;
+    font-weight: bold;
+    color:       var(--close-button-color-normal)
+}
+
+.fullscreen-overlay .btn-close-overlay-wrapper:hover .close {
+    border-color: var(--close-button-color-hover);
+}
+
+.fullscreen-overlay .btn-close-overlay-wrapper:hover .close:before,
+.fullscreen-overlay .btn-close-overlay-wrapper:hover .close:after {
+    background: var(--close-button-color-hover);
+}
+
+.fullscreen-overlay .btn-close-overlay-wrapper:hover::after {
+    color: var(--close-button-color-hover);
+}
+
+
+/* アセンブラ (オーバーレイ表示) */
+#overlay-assembler #area-assembler-inout {
+    width:           100%;
+    height:          93%;
+
+    display:         flex;
+    justify-content: space-around;
+}
+
+#overlay-assembler > #area-assembler-inout > #area-input-assembly,
+#overlay-assembler > #area-assembler-inout > #area-output-binary {
+    margin: 0;
+    width:  calc(50% - 2rem);
+    height: 100%;
+}
+
+#overlay-assembler > #area-assembler-inout > #area-input-assembly > textarea#input-assembly,
+#overlay-assembler > #area-assembler-inout > #area-output-binary  > textarea#output-binary {
+    margin: 0;
+    width:  100%;
+    height: 100%;
+    box-sizing: border-box;
+
+    resize: none;
+}
+
+#overlay-assembler > #area-assembler-buttons {
+    margin:          0 1rem;
+    height:          7%;
+
+    display:         flex;
+    justify-content: flex-end;  /* 水平方向の配置: 右寄せ */
+    align-items:     flex-end;  /* 垂直方向の配置: 下揃え */
+}
+
+#overlay-assembler > #area-assembler-buttons > .buttons {
+    width:           calc(6rem * 2 + 2rem); /* 6rem ボタン x2 と 間隔 2rem */
+
+    display:         flex;
+    justify-content: space-between;
+}

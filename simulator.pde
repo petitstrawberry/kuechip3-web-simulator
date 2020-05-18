@@ -27,7 +27,22 @@ Boolean fPause     = false;
 
 int printStartAddress = 0x00;
 
+
+// ----- js から参照する用のアクセッサ -----
 KueState State() { return kuesim.state; }
+int getReturnCodeContinue() { return RT_CONTINUE; }
+int getReturnCodeDone()     { return RT_DONE;     }
+int getReturnCodeHlt()      { return RT_HLT;      }
+int getReturnCodeError()    { return RT_ERROR;    }
+
+HashMap<String, int> getReturnCodeConstans() {
+  const h = new HashMap<String, int>()
+  h.put("RT_CONTINUE", RT_CONTINUE);
+  h.put("RT_DONE",     RT_DONE);
+  h.put("RT_HLT",      RT_HLT);
+  h.put("RT_ERROR",    RT_ERROR);
+  return h;
+}
 
 
 // ----- functions -----
@@ -66,14 +81,16 @@ void MainProcess() {
   if( !fPause ) {
     // sysLog.Append("----- count : " + ++count + " -----");
     ++count;
-    if( !kuesim.Update() ) { Exit(); break; }
+
+    int res = kuesim.Update();
+    if( res != RT_DONE && res != RT_CONTINUE ) { Exit(); break; }
   }
 
   if( sysLog.Size() > 1000000 ) {
     sysLog.FileDump();
     sysLog.Clear();
   }
-  
+
   // if( count == 18800000 ) {
   //   // fPause = true;
   //   DEBUG_ACCEL = 10000;
