@@ -1,0 +1,3 @@
+[submodule "kueasm"]
+	path = kueasm
+	url = git@github.com:ks-yuzu/kueasm.git
