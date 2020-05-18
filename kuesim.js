@@ -194,7 +194,7 @@ $('#btn_simulator_reset').on('click', () => {
     $('#OBUF_WE').val("0")
     $('#IBUF_FLG_CLR').val("0")
 
-    $('mem').val('no memory data')
+    $('#mem').val('no memory data')
 })
 
 // ===== funtions =====
