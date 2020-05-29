@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>kuesim web interface</title>
+  <script src="processing-1.4.8.js"></script>
+  <link href="kuesim.css" type="text/css" rel="stylesheet"/>
+
+  <!-- BEGIN for debug -->
+  <script src="sample-prog.js"></script>
+  <!-- END for debug -->
+</head>
+<body>
+  <!-- interface -->
+  <div id="interface">
+    <div id="buttons">
+      <button onclick="execPhase();">1 phase</button>
+      <button onclick="execInst();">1 inst</button>
+      <button onclick="execAll();">all</button>
+      <button onclick="execInsts();">start insts</button>
+      <button onclick="stopExecuting();">stop insts</button>
+      <button onclick="setMem();">set memory</button>
+
+      <!-- BEGIN for debug -->
+      <span style="margin-right: 4em"></span>
+      <input onkeypress="UpdateSampleId(event.keyCode);" id="program_id" value="4.1"></input>
+      <button onclick="SetSampleProgram();">set sample</button>
+      <!-- END for debug -->
+    </div>
+
+    <div id="state-disp">
+      <div id="regs-area" class="panel">
+        <div class="panel-header">phase & registers</div>
+        <table>
+          <tr> <td>Phase</td>        <td><input id="Phase"        class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>PC</td>           <td><input id="PC"           class="reg" placeholder="0x0000" value="0x0000"></td> </tr>
+          <tr> <td>IR</td>           <td><input id="IR"           class="reg" placeholder="0x00"   value="0x00">  </td> </tr>
+          <tr> <td>SP</td>           <td><input id="SP"           class="reg" placeholder="0x0000" value="0x0000"></td> </tr>
+          <tr> <td>ACC</td>          <td><input id="ACC"          class="reg" placeholder="0x0000" value="0x0000"></td> </tr>
+          <tr> <td>IX</td>           <td><input id="IX"           class="reg" placeholder="0x0000" value="0x0000"></td> </tr>
+          <tr> <td>MAR</td>          <td><input id="MAR"          class="reg" placeholder="0x0000" value="0x0000"></td> </tr>
+          <tr> <td>CF</td>           <td><input id="CF"           class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>VF</td>           <td><input id="VF"           class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>NF</td>           <td><input id="NF"           class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>ZF</td>           <td><input id="ZF"           class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>IBUF</td>         <td><input id="IBUF"         class="reg" placeholder="0x00"   value="0x00">  </td> </tr>
+          <tr> <td>OBUF</td>         <td><input id="OBUF"         class="reg" placeholder="0x00"   value="0x00">  </td> </tr>
+          <tr> <td>IBUF_RE</td>      <td><input id="IBUF_RE"      class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>OBUF_WE</td>      <td><input id="OBUF_WE"      class="reg" placeholder="0"      value="0">     </td> </tr>
+          <tr> <td>IBUF_FLG_CLR</td> <td><input id="IBUF_FLG_CLR" class="reg" placeholder="0"      value="0">     </td> </tr>
+        </table>
+      </div>
+
+      <div id="inst-area" class="panel">
+        <div class="panel-header">instructions</div>
+        <textarea id="inst" placeholder="初期メモリデータを入力">
+                 # PROG:   EQU  0
+                 # CA:     EQU  PROG
+0000: 00C0       #         EOR  ACC, ACC
+0002: 006A 0056  #         LD   IX,  TEST
+0006: 0076 0000  # LP0:    ST   ACC, [IX]
+000A: 00BA 0002  #         ADD  IX,  2
+000E: 00FA 0000  #         CMP  IX,  PROG
+0012: 0031 0006  #         BNZ       LP0
+0016: 00C9       #         EOR  IX,  IX
+0018: 006A 0056  # LP2:    LD   IX,  TEST
+001C: 00F6 0000  # LP3:    CMP  ACC, [IX]
+0020: 0031 0054  #         BNZ       ERR
+0024: 00C2 8000  #         EOR  ACC, 8000H
+0028: 0047       #         RLL  ACC
+002A: 0076 0000  #         ST   ACC, [IX]
+002E: 0039 003A  #         BZ        NX3
+0032: 00F2 FFFE  #         CMP  ACC, FFFEH
+0036: 0031 001C  #         BNZ       LP3
+003A: 00C2 FFFE  # NX3:    EOR  ACC, FFFEH
+003E: 00BA 0002  #         ADD  IX,  2
+0042: 00FA 0000  #         CMP  IX,  PROG
+0046: 0031 001C  #         BNZ       LP3
+004A: 0010       #         OUT
+004C: 00C2 FFFE  #         EOR  ACC, FFFEH
+0050: 0030 0018  #         BA        LP2
+0054: 000F       # ERR:    HLT  
+                 # TEST:   EQU  CA
+
+</textarea>
+      </div>
+
+      <div id="mem-area" class="panel">
+        <div class="panel-header">memory</div>
+        <div id="mem" class="monospace"></div> <!-- memory dump -->
+      </div>
+
+      <div id="log-area" class="panel">
+        <div class="panel-header">log</div>
+        <textarea id="log" class="monospace"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- <canvas id="kuesim" data-processing-sources="test.pde"></canvas> -->
+  <canvas id="kuesim" data-processing-sources="ALU.pde input.pde InstBase.pde InstFactory.pde InstIn.pde InstNop.pde InstRcf.pde InstShift.pde InstSt.pde KueState.pde RtCode.pde textarea.pde Hex.pde InstAlu.pde InstBcc.pde InstHlt.pde InstLd.pde InstOut.pde InstScf.pde InstSp.pde KueSim.pde pos.pde simulator.pde KueIo.pde"></canvas>
+ 
+  <script src="kuesim.js"></script>
+</body>
+</html>
