@@ -12,6 +12,9 @@
     /* --input-background:       #333; */
     --input-background:       #303336;
     --input-foreground:       white;
+    --button-color-normal:     #aaa;
+    --button-color-highlight:  #39a9d6;
+    --button-color-hover:      #F09629;
 
 
     /* ----- 上部エリア ----- */
@@ -93,9 +96,17 @@ button {
     cursor: pointer;
 }
 
+button.highlight {
+    background: var(--button-color-highlight);
+}
+
+button:active {
+    background: #000;
+}
+
 button:hover {
     /* background: orange; */
-    background: #F09629;
+    background: var(--button-color-hover);
 }
 
 button:disabled {

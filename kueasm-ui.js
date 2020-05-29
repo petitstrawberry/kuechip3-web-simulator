@@ -39,6 +39,21 @@ $(window).on('keyup', e => {
   }
 })
 
+
+// アセンブリが入力された時
+$('#input-assembly').on('keyup', () => {
+  $('#btn-assemble-wrapper').addClass('highlight')
+})
+
+
+// アセンブルされた時
+$('#btn-assemble-wrapper').on('click', () => {
+  $('#btn-assemble-wrapper').removeClass('highlight') // ボタンの色を戻す
+  $('#btn-copy-to-clipboard').addClass('highlight')
+  $('#btn-copy-to-simulator').addClass('highlight')
+})
+
+
 // クリップボードにコピー
 $('#btn-copy-to-clipboard').on('click', () => {
   logger.info('Copy binary to clipboard')

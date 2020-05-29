@@ -1,6 +1,7 @@
 :root {
-    --close-button-color-normal: #aaa;
-    --close-button-color-hover:  #39a9d6;
+    --button-color-normal:     #aaa;
+    --button-color-highlight:  #39a9d6;
+    --button-color-hover:      #F09629;
 }
 
 /* -------------------- icons -------------------- */
@@ -9,7 +10,7 @@
 	position: relative;
 	width: 1.4em;
 	height: 1.4em;
-	border: 0.11em solid var(--close-button-color-normal);
+	border: 0.11em solid var(--button-color-normal);
 	border-radius: 100%;
 }
 /* 左 */
@@ -20,7 +21,7 @@
 	width: 0.2em;
 	height: 1em;
 	content: "";
-	background-color: var(--close-button-color-normal);
+	background-color: var(--button-color-normal);
 	transform: rotate(45deg);
 }
 /* 右 */
@@ -31,7 +32,7 @@
 	width: 1em;
 	height: 0.2em;
 	content: "";
-	background-color: var(--close-button-color-normal);
+	background-color: var(--button-color-normal);
 	transform: rotate(225deg);
 }
 
@@ -91,20 +92,20 @@
     content:     "ESC";
     font-size:   0.7rem;
     font-weight: bold;
-    color:       var(--close-button-color-normal)
+    color:       var(--button-color-normal)
 }
 
 .fullscreen-overlay .btn-close-overlay-wrapper:hover .close {
-    border-color: var(--close-button-color-hover);
+    border-color: var(--button-color-hover);
 }
 
 .fullscreen-overlay .btn-close-overlay-wrapper:hover .close:before,
 .fullscreen-overlay .btn-close-overlay-wrapper:hover .close:after {
-    background: var(--close-button-color-hover);
+    background: var(--button-color-hover);
 }
 
 .fullscreen-overlay .btn-close-overlay-wrapper:hover::after {
-    color: var(--close-button-color-hover);
+    color: var(--button-color-hover);
 }
 
 
@@ -154,11 +155,18 @@
     border-left:1.5rem solid gray;
 }
 
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper.highlight div {
+    background:   var(--button-color-highlight);
+}
+#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper.highlight div:before {
+    border-left:1.5rem solid var(--button-color-highlight);
+}
+
 #overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div {
-    background:   var(--close-button-color-hover);
+    background:   var(--button-color-hover);
 }
 #overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div:before {
-    border-left:1.5rem solid var(--close-button-color-hover);
+    border-left:1.5rem solid var(--button-color-hover);
 }
 
 
@@ -177,3 +185,4 @@
     display:         flex;
     justify-content: space-between;
 }
+
