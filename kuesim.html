@@ -72,36 +72,7 @@
             <button id="btn-set-memory">set memory</button>
           </div>
         </div>
-        <textarea id="inst" placeholder="初期メモリデータを入力">
-                 # PROG:   EQU  0
-                 # CA:     EQU  PROG
-0000: 00C0       #         EOR  ACC, ACC
-0002: 006A 0056  #         LD   IX,  TEST
-0006: 0076 0000  # LP0:    ST   ACC, [IX]
-000A: 00BA 0002  #         ADD  IX,  2
-000E: 00FA 0000  #         CMP  IX,  PROG
-0012: 0031 0006  #         BNZ       LP0
-0016: 00C9       #         EOR  IX,  IX
-0018: 006A 0056  # LP2:    LD   IX,  TEST
-001C: 00F6 0000  # LP3:    CMP  ACC, [IX]
-0020: 0031 0054  #         BNZ       ERR
-0024: 00C2 8000  #         EOR  ACC, 8000H
-0028: 0047       #         RLL  ACC
-002A: 0076 0000  #         ST   ACC, [IX]
-002E: 0039 003A  #         BZ        NX3
-0032: 00F2 FFFE  #         CMP  ACC, FFFEH
-0036: 0031 001C  #         BNZ       LP3
-003A: 00C2 FFFE  # NX3:    EOR  ACC, FFFEH
-003E: 00BA 0002  #         ADD  IX,  2
-0042: 00FA 0000  #         CMP  IX,  PROG
-0046: 0031 001C  #         BNZ       LP3
-004A: 0010       #         OUT
-004C: 00C2 FFFE  #         EOR  ACC, FFFEH
-0050: 0030 0018  #         BA        LP2
-0054: 000F       # ERR:    HLT  
-                 # TEST:   EQU  CA
-
-</textarea>
+        <textarea id="inst" placeholder="初期メモリデータを入力"></textarea>
       </div>
 
       <div id="mem-area" class="panel">
