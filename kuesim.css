@@ -15,6 +15,7 @@
     --button-color-normal:     #aaa;
     --button-color-highlight:  #39a9d6;
     --button-color-hover:      #F09629;
+    --button-color-active:     #f8C870;
 
 
     /* ----- 上部エリア ----- */
@@ -100,13 +101,12 @@ button.highlight {
     background: var(--button-color-highlight);
 }
 
-button:active {
-    background: #000;
+button:hover {
+    background: var(--button-color-hover);
 }
 
-button:hover {
-    /* background: orange; */
-    background: var(--button-color-hover);
+button:active {
+    background: var(--button-color-active) !important;
 }
 
 button:disabled {
