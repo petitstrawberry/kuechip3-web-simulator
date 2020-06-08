@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>kuesim web interface</title>
+  <title>KUECHIP-3F CPU Web Simulator</title>
   <script src="processing-1.4.8.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <link href="kuesim.css" type="text/css" rel="stylesheet"/>
@@ -12,6 +12,7 @@
   <!-- interface -->
   <div id="interface">
     <div id="buttons">
+      <div id="title" style="display: inline-block; margin: 0 0.5rem">KUECHIP-3F</div>
       <button id="btn-exec-phase" disabled>1 Phase</button>
       <button id="btn-exec-inst" disabled>1 Inst</button>
       <!-- <button onclick="execAll();">all</button> -->
@@ -96,6 +97,9 @@
         <div id="area-assemble-button">
           <div id="btn-assemble-wrapper">
             <div id="btn-assemble" class="arrow"></div>
+          </div>
+          <div>
+            assemble
           </div>
         </div>
         <div id="area-output-binary">

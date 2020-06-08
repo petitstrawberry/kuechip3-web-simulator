@@ -139,13 +139,18 @@
 #overlay-assembler > #area-assembler-inout > #area-assemble-button {
     height: 100%;
     width:  5rem;
-    display: flex;
+
+    display:         flex;
     justify-content: center;
     align-items:     center;
+    flex-direction:  column;
+
+    color: #ddd;
 }
 
 #overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper {
     width:  3.2rem;
+    height: 3.2rem;
 }
 
 #overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper div {

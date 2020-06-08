@@ -24,6 +24,7 @@ function closeOverlay() {
 // アセンブラをオーバーレイ表示
 $('#btn-open-assembler').on('click', () => {
   $('#overlay-assembler').show()
+  $('#input-assembly').focus()
 })
 
 // 全オーバーレイの非表示
