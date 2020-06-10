@@ -71,9 +71,9 @@
     background: rgba(63, 63, 63, 0.95);
     z-index:    10;
 
-    padding:    2%;
+    padding:    1% 2%;
 
-    display:    none;
+    display:    block;
 }
 
 /* オーバーレイを閉じるボタン */
@@ -110,24 +110,37 @@
 
 
 /* アセンブラ (オーバーレイ表示) */
-#overlay-assembler #area-assembler-inout {
+#overlay-assembler > #area-assembler-form {
     width:           100%;
-    height:          93%;
+    height:          75%;
+    margin:          0;
 
     display:         flex;
+    flex-wrap:       wrap;
     justify-content: space-around;
     align-items:     center;
 }
 
-#overlay-assembler > #area-assembler-inout > #area-input-assembly,
-#overlay-assembler > #area-assembler-inout > #area-output-binary {
+#overlay-assembler > #area-assembler-form > .assembler-form-left,
+#overlay-assembler > #area-assembler-form > .assembler-form-right {
     margin: 0;
-    width:  calc(50% - 2rem);
-    height: 100%;
+    width:  calc(50% - 3rem);
 }
 
-#overlay-assembler > #area-assembler-inout > #area-input-assembly > textarea#input-assembly,
-#overlay-assembler > #area-assembler-inout > #area-output-binary  > textarea#output-binary {
+#overlay-assembler > #area-assembler-form > .assembler-form-center {
+    width:  6rem;
+}
+
+#overlay-assembler > #area-assembler-form > .assembler-form-upper {
+    height: calc(100% - 4rem);
+}
+
+#overlay-assembler > #area-assembler-form > .assembler-form-lower {
+    height:          4rem;
+}
+
+#overlay-assembler > #area-assembler-form > #area-input  > textarea#input-assembly,
+#overlay-assembler > #area-assembler-form > #area-output > textarea#output-binary {
     margin: 0;
     width:  100%;
     height: 100%;
@@ -136,58 +149,90 @@
     resize: none;
 }
 
-#overlay-assembler > #area-assembler-inout > #area-assemble-button {
-    height: 100%;
-    width:  5rem;
-
+#overlay-assembler > #area-assembler-form > #area-assemble-button {
     display:         flex;
     justify-content: center;
     align-items:     center;
     flex-direction:  column;
-
-    color: #ddd;
 }
 
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper {
+#overlay-assembler > #area-assembler-form > #area-assemble-button:hover {
+    background: #fff1;
+}
+
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-wrapper {
     width:  3.2rem;
     height: 3.2rem;
 }
 
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper div {
-    background:   gray;
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-wrapper div {
+    background: gray;
 }
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper div:before {
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-wrapper div:before {
     border-left:1.5rem solid gray;
 }
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-string {
+    color: gray;
+}
 
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper.highlight div {
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-wrapper.highlight div {
     background:   var(--button-color-highlight);
 }
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper.highlight div:before {
-    border-left:1.5rem solid var(--button-color-highlight);
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-wrapper.highlight div:before {
+    border-left:  1.5rem solid var(--button-color-highlight);
+}
+#overlay-assembler > #area-assembler-form > #area-assemble-button > #btn-assemble-string.highlight {
+    color:        var(--button-color-highlight);
 }
 
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div {
+#overlay-assembler > #area-assembler-form > #area-assemble-button:hover > #btn-assemble-wrapper div {
     background:   var(--button-color-hover);
 }
-#overlay-assembler > #area-assembler-inout > #area-assemble-button > #btn-assemble-wrapper:hover div:before {
-    border-left:1.5rem solid var(--button-color-hover);
+#overlay-assembler > #area-assembler-form > #area-assemble-button:hover > #btn-assemble-wrapper div:before {
+    border-left:  1.5rem solid var(--button-color-hover);
+}
+#overlay-assembler > #area-assembler-form > #area-assemble-button:hover > #btn-assemble-string {
+    color:        var(--button-color-hover);
 }
 
 
-#overlay-assembler > #area-assembler-buttons {
+
+#overlay-assembler .area-assembler-buttons {
     margin:          0 1rem;
-    height:          7%;
 
     display:         flex;
     justify-content: flex-end;  /* 水平方向の配置: 右寄せ */
-    align-items:     flex-end;  /* 垂直方向の配置: 下揃え */
+    align-items:     center;    /* 垂直方向の配置: 上下中央 */
 }
 
-#overlay-assembler > #area-assembler-buttons > .buttons {
-    width:           calc(6rem * 2 + 2rem); /* 6rem ボタン x2 と 間隔 2rem */
-
-    display:         flex;
-    justify-content: space-between;
+#overlay-assembler .area-assembler-buttons > button {
+    height:          80%;
+    margin-left:     1rem;
+    padding:         0;
+    word-break:      keep-all;
 }
 
+#overlay-assembler .area-assembler-buttons > button > a {
+    width:   100%;
+    margin:  auto 0;
+    padding: 0;
+
+    display: block;
+
+    /* リンクの見た目を消す */
+    color:           white;
+    text-decoration: none;
+}
+
+
+#overlay-assembler > #area-overlay-log {
+    height: 25%;
+}
+
+#overlay-assembler > #area-overlay-log > div.log {
+    height: calc(100% - 2%);
+    width: 100%;
+    border-top: solid 1px gray;
+    padding: 0.5rem 1rem;
+    overflow: auto;
+}

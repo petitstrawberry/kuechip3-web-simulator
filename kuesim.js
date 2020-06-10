@@ -83,8 +83,15 @@ const logger = {
 
 
 // ===== event handler =====
-$('#btn-set-memory').on('click', () => {
+// メモリデータが変更された時に set memory をハイライトする
+$('#inst').on('keyup change', () => {
+  $('#btn-set-memory').addClass('highlight')
+})
+
+$('#btn-set-memory').on('click', (e) => {
     logger.info('Set memory data.')
+
+    $(e.target).removeClass('highlight')
 
     const insts = $('#inst').val()
     const instList = insts.replace(/^\n/gm, '').split('\n')
@@ -99,7 +106,6 @@ $('#btn-set-memory').on('click', () => {
     $('#btn-stop-execution' ).prop('disabled', false)
     $('#btn-exec-phase'     ).prop('disabled', false)
     $('#btn-exec-inst'      ).prop('disabled', false)
-
 
     dumpMem()
 })
@@ -354,17 +360,18 @@ function toHex( value, digit ) {
 
 // 内部用. 通常は logger.xxx を使う
 function _log(str) {
-    // developer tool への出力 (F12 等で確認)
-    console.log(str)
+  // developer tool への出力 (F12 等で確認)
+  console.log(str)
 
-    const now = new Date()
-    const hour = now.getHours().toString().padStart(2, '0')
-    const minute = now.getMinutes().toString().padStart(2, '0')
+  const now = new Date()
+  const hour = now.getHours().toString().padStart(2, '0')
+  const minute = now.getMinutes().toString().padStart(2, '0')
 
-    // ログエリアへの出力
-    $('#log').html( $('#log').html() + `[${hour}:${minute}] ${str}<br>` )
+  // ログエリアへの出力
+  $('.log').append(`[${hour}:${minute}] ${str}<br>`)
 
-    // 自動スクロール
-    const logArea = $('#log')
-    logArea.scrollTop = logArea.scrollHeight  // scroll to the bottom
+  // 自動スクロール
+  $('.log').toArray().forEach((i) => {
+    $(i).animate({scrollTop: i.scrollHeight}, 150)  // c.f. fast で 200 ms
+  })
 }

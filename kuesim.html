@@ -83,34 +83,40 @@
 
       <div id="log-area" class="panel">
         <div class="panel-header">Log</div>
-        <div id="log" class="monospace"></div>
+        <div id="log" class="monospace log"></div>
       </div>
     </div>
     <div id="overlay-assembler" class="fullscreen-overlay">
       <div class="btn-close-overlay-wrapper">
         <div class="btn-close-overlay close"></div>
       </div>
-      <div id="area-assembler-inout">
-        <div id="area-input-assembly">
-          <textarea id="input-assembly" placeholder="input assembly here"></textarea>
+      <div id="area-assembler-form">
+        <div id="area-input" class="assembler-form-left assembler-form-upper">
+          <textarea id="input-assembly" placeholder="input assembly language program here"></textarea>
         </div>
-        <div id="area-assemble-button">
+        <div id="area-assemble-button" class="assembler-form-center assembler-form-upper">
           <div id="btn-assemble-wrapper">
             <div id="btn-assemble" class="arrow"></div>
           </div>
-          <div>
-            assemble
-          </div>
+          <div id="btn-assemble-string">assemble</div>
         </div>
-        <div id="area-output-binary">
-          <textarea id="output-binary" placeholder="output binary will be generated here"></textarea>
+        <div id="area-output" class="assembler-form-right assembler-form-upper">
+          <textarea id="output-binary" placeholder="output machine language program will be generated here"></textarea>
         </div>
-      </div>
-      <div id="area-assembler-buttons">
-        <div class="buttons">
+
+        <div class="area-assembler-buttons assembler-form-left assembler-form-lower">
+          <button id="btn-open-document-jp"><a href="/document/jp.html" target="_blank">アセンブラ ドキュメント</a></button>
+          <button id="btn-open-document-en"><a href="/document/en.html" target="_blank">Assembler Document</a></button>
+          <button id="btn-open-document-ch"><a href="/document/ch.html" target="_blank">汇编程序文獻</a></button>
+        </div>
+        <div class="assembler-form-center assembler-form-lower"><!-- dummy --></div>
+        <div class="area-assembler-buttons assembler-form-right assembler-form-lower">
           <button id="btn-copy-to-clipboard">copy to clipboard</button>
           <button id="btn-copy-to-simulator">copy to simulator</button>
         </div>
+      </div>
+      <div id="area-overlay-log">
+        <div class="monospace log"></div>
       </div>
     </div>
   </div>

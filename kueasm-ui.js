@@ -44,12 +44,14 @@ $(window).on('keyup', e => {
 // アセンブリが入力された時
 $('#input-assembly').on('keyup', () => {
   $('#btn-assemble-wrapper').addClass('highlight')
+  $('#btn-assemble-string').addClass('highlight')
 })
 
 
-// アセンブルされた時
-$('#btn-assemble-wrapper').on('click', () => {
+// アセンブルされた時 (アセンブラのトリガは ts 側から行う)
+$('#area-assemble-button').on('click', () => {
   $('#btn-assemble-wrapper').removeClass('highlight') // ボタンの色を戻す
+  $('#btn-assemble-string').removeClass('highlight')  // ボタンの色を戻す
   $('#btn-copy-to-clipboard').addClass('highlight')
   $('#btn-copy-to-simulator').addClass('highlight')
 })
@@ -61,11 +63,13 @@ $('#btn-copy-to-clipboard').on('click', () => {
   copy( $('#output-binary').val() )
 })
 
+
 // シミュレータにコピー
 $('#btn-copy-to-simulator').on('click', () => {
   logger.info('Copy binary to simulator input')
   const binary = $('#output-binary').val()
   $('#inst').val(binary)
+  $('#inst').change() // 明示的に change イベントを発火させる
 
   closeOverlay()
 })
