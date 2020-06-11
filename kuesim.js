@@ -338,7 +338,7 @@ function dumpMem() {
 function dumpPhase() {
     const psg = getProcessingInstance()
     const state = psg.State()
-    $('#Phase').val( state.phase )
+    $('#phase').val( state.phase )
 }
 
 
