@@ -5,7 +5,7 @@ Boolean fFinished = false;
 void SetBinary(String bin []) {
   // initialize momory
   for(int addr = 0; addr < MAX_MEM_ADDR; addr += 2) {
-    kuesim.state.SetMem(addr, 0x0);
+    kuesim.state.SetMem(addr, null);
   }
 
   // parse memory image

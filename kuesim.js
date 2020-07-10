@@ -312,10 +312,12 @@ function dumpMem() {
     const state = psg.State()
     const memStr = []
 
+  console.log(state.mem)
+
     // 最後の有効データが存在する番地を調べる
     let lastIdx = 0
     for (let idx = 0xfffe / 2; idx >= 0; idx--) {
-        if( state.mem[idx] !== 0 ) {
+        if( state.mem[idx] != null ) {
             lastIdx = idx
             break
         }
@@ -326,8 +328,10 @@ function dumpMem() {
         const current = state.currentInstAddr
         const styleBegin = ( idx * 2 === current ) ? '<div style="background: steelblue">' : '<div>'
         const styleEnd   = '</div>'
+
+        const value = state.mem[idx] != null ? toHex(state.mem[idx], 4) : 'XXXXXX'
         memStr.push(
-            styleBegin + toHex(idx * 2, 4) + " :  " + toHex(state.mem[idx], 4) + styleEnd
+            styleBegin + toHex(idx * 2, 4) + " :  " + value + styleEnd
         )
     }
 

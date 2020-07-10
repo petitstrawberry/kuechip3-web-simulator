@@ -66,7 +66,7 @@ class KueState {
     currentInstAddr = pc;
     
     // init (for debug)
-    for(int addr = 0; addr < MAX_MEM_ADDR; addr += 2) { SetMem(addr, 0x0); }
+    for(int addr = 0; addr < MAX_MEM_ADDR; addr += 2) { SetMem(addr, null); }
     // for(int addr = 0; addr < MAX_MEM_ADDR; addr += 2) { SetMem(addr, 0xFFFF); }
 
     // int insts[] = pg_memtest; // select test program    
