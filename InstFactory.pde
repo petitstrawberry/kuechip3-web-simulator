@@ -56,11 +56,31 @@ class InstFactory {
           default : break;
         } break;            
 
-      // FCF SCF
+      // RCF SCF
       case "2":
-        switch ( "" + inst.substring(1, 2)) {
+        final int cc;
+        switch (inst.substring(1, 2)) {
+          case "0":
+          case "1":
+          case "2":
+          case "3":
+          case "4":
+          case "5":
+          case "6":
+          case "7":
+          case "8":
+          case "9": cc = int(inst.substring(1, 2)); break;
+          case "A": cc = 0xA; break;
+          case "B": cc = 0xB; break;
+          case "C": cc = 0xC; break;
+          case "D": cc = 0xD; break;
+          case "E": cc = 0xE; break;
+          case "F": cc = 0xF; break;
+          default : cc = -1;  break;
+        }
+        switch ("" + GetMsb(cc, 4)) {
           case "0" : return new InstRcf();
-          case "8" : return new InstScf();
+          case "1" : return new InstScf();
           default : break;
         } break;            
 
