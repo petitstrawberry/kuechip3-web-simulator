@@ -73,7 +73,7 @@ class InstShift extends InstBase {
     switch(cmd) {
       case CMD_SLA:
       case CMD_RLA:
-        state.flagVf = state.flagCf;
+        state.flagVf = state.flagCf ^ state.flagNf;
         break;
       default: break;    
     } // 2017.01.04
