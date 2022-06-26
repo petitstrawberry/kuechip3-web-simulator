@@ -142,7 +142,7 @@ class KueState {
     return true;
   }
 
-  public void IncPc() { pc += 2; }  // increment : use instead of pc++
+  public void IncPc() { pc = (pc + 2) & 0xffff; }  // increment : use instead of pc++
   public void SetPc(Integer data) { pc = data; }
   public Integer GetPc() { return pc; }
   
