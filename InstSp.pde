@@ -50,8 +50,8 @@ class InstPsh extends InstBase {
 
   // protected
   protected int Exec_P2 (KueState state) {
-    state.mar = state.sp - 2;
-    state.sp -= 2;
+    state.mar = (state.sp - 2) & 0xffff;
+    state.sp  = (state.sp - 2) & 0xffff;
     return RT_CONTINUE;
   }
 
@@ -81,7 +81,7 @@ class InstPop extends InstBase {
   // protected
   protected int Exec_P2 (KueState state) {
     state.mar = state.sp;
-    state.sp += 2;
+    state.sp  = (state.sp + 2) & 0xffff;
     return RT_CONTINUE;
   }
 
@@ -110,14 +110,14 @@ class InstCal extends InstBase {
 
   // protected
   protected int Exec_P2 (KueState state) {
-    state.mar = state.sp - 2;
-    state.sp  = state.sp - 2;
+    state.mar = (state.sp - 2) & 0xffff;
+    state.sp  = (state.sp - 2) & 0xffff;
     // state.IncPc();
     return RT_CONTINUE;
   }
 
   protected int Exec_P3 (KueState state) {
-    state.SetMem(state.mar, state.pc + 2);
+    state.SetMem(state.mar, (state.pc + 2) & 0xffff);
     state.mar = state.pc;
     return RT_CONTINUE;
   }
@@ -141,7 +141,7 @@ class InstRet extends InstBase {
   // protected
   protected int Exec_P2 (KueState state) {
     state.mar = state.sp;
-    state.sp += 2;
+    state.sp  = (state.sp + 2) & 0xffff;
     return RT_CONTINUE;
   }
 
