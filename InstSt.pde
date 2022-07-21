@@ -43,11 +43,11 @@ class InstSt extends InstBase {
     }
     else if( operandIdB == OPERAND_IDX_IX ) {
    // state.mar = alu.exec(state.ix, state.GetMem(state.mar), state, CMD_ADD);
-      state.mar = state.ix + state.GetMem(state.mar);
+      state.mar = (state.ix + state.GetMem(state.mar)) & 0xffff;
     }
     else if( operandIdB == OPERAND_IDX_SP ) {
    // state.mar = alu.exec(state.sp, state.GetMem(state.mar), state, CMD_ADD);
-      state.mar = state.sp + state.GetMem(state.mar);
+      state.mar = (state.sp + state.GetMem(state.mar)) & 0xffff;
     }
     else {
       Error("[internal error] Found an invalid operand B in InstSt.");
